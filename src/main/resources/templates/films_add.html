@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Films Add Form</title>
+</head>
+<body>
+<h2>Add New Actor</h2>
+<form action="#" th:action="@{/films/submit}" th:object="${films}" method="post">
+    <table>
+        <tr>
+            <td>Film Title</td>
+            <td><input type="text" th:field="*{title}"/></td>
+            <td th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></td>
+        </tr>
+
+        <tr>
+            <td>Film Genre</td>
+            <td><input type="radio" th:field = "*{genre}" value="Comedy"/> Comedy
+                <input type="radio" th:field = "*{genre}" value="Drama"/> Drama
+                <input type="radio" th:field = "*{genre}" value="Fantasy "/> Fantasy </td>
+            <td th:if="${#fields.hasErrors('genre')}"th:errors="*{genre}"></td>
+        </tr>
+        <tr>
+            <td>Year of issue</td>
+            <td><input type="number" th:field="*{year}"></td>
+            <td th:if="${#fields.hasErrors('year')}"th:errors="*{year}"></td>
+        </tr>
+        <tr>
+            <td>Actors</td>
+            <td><select th:field="*{actors}" multiple>
+                <option th:each="actor : ${actors}" th:value="${actor.id}" th:text="${actor.firstName + ' ' + actor.lastName}"></option>
+            </select></td>
+            <td th:if="${#fields.hasErrors('actors')}"th:errors="*{actors}"></td>
+        </tr>
+    </table>
+
+</form>
+
+</body>
+</html>
