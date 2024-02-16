@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Actors Add form</title>
+</head>
+<body>
+<center>
+<h2>Add New Actor</h2>
+<form action="#" th:action="@{/actor/submit}" th:object="${actors}" method="post">
+    <table>
+        <tr>
+            <td>First Name:</td>
+             <td><input type="text" th:field="*{firstName}" />
+            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</span></td>
+        </tr>
+        <tr>
+            <td>Last Name:</td>
+            <td><input type="text" th:field="*{lastName}" />
+            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</span></td>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td><input type="number" th:field="*{age}" required="required">
+            <span th:if="${#fields.hasErrors('age')}" th:errors = "*{age}">Age Error</span></td>
+        </tr>
+        <tr>
+            <td>Nationality:</td>
+            <td><select th:field="*{nationality}">
+                <option th:each="nationality :${nationality}" th:value = "${nationality.id}" th:text="${nationality.name}"></option>
+            </select>
+            <span th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}">Nationality Error</span></td>
+        </tr>
+        <tr>
+            <td><button type="submit">Submit</button></td>
+            <td><button type="reset">Reset</button></td>
+        </tr>
+    </table>
+
+
+    <footer th:insert="fragments/footer.html ::footer"></footer>
+</form>
+</center>
+</body>
+</html>
