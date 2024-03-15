@@ -1,0 +1,46 @@
+<header th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:c="http://www.w3.org/1999/xhtml"
+        xmlns:sec="http://www.w3.org/1999/xhtml">
+    <ul class="nav nav-tabs">
+        <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+            <a th:class="${#strings.equals(pageTitle,'All Actors') ? 'nav-link active' : 'nav-link'}"
+               th:href="@{/actors/all}">All actors</a>
+        </li>
+        <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+            <a th:class="${#strings.equals(pageTitle,'Add New Actors') ? 'nav-link active' : 'nav-link'}"
+               th:href="@{@{/actors/add}}">Add new actor</a>
+        </li>
+        <li class="nav-item">
+            <a th:class="${#strings.equals(pageTitle,'All Films') ? 'nav-link active' : 'nav-link'}"
+               th:href="@{/films/all}">All films </a>
+        </li>
+        <li class="nav-item" sec:authorize="hasRole('USER') or hasRole('ADMIN')">
+            <a th:class="${#strings.equals(pageTitle,'Add New Films') ? 'nav-link active' : 'nav-link'}"
+               th:href="@{/films/add}">Add new film</a>
+        </li>
+        <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+            <a th:class="${#strings.equals(pageTitle,'All Nationalitys') ? 'nav-link active' : 'nav-link'}"
+               th:href="@{/nationality/all}">All nationality </a>
+        </li>
+        <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+            <a th:class="${#strings.equals(pageTitle,'Add New Nationality') ? 'nav-link active' : 'nav-link'}"
+               th:href="@{/nationality/add}">Add new nationality</a>
+        </li>
+        <th:block th:if="${#authorization.expression('isAnonymous()')}">
+            <li class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>
+            <li>
+        </th:block>
+        <th:block th:if="${#authorization.expression('isAuthenticated()')}">
+            <li class="nav-item">
+                <a th:class="nav-link" th:href="@{/user-profile}">
+                    <span th:inline="text">Logged in as <span
+                            th:text="${#authentication.getPrincipal().getName()+' '+#authentication.getPrincipal().getLastName()}"></span></span></a>
+            </li>
+            <li>
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" class="btn btn-link nav-link" value="Logout"/>
+                </form>
+            </li>
+        </th:block>
+    </ul>
+</header>
+

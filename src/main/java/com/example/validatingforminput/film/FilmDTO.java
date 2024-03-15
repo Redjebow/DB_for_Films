@@ -1,41 +1,43 @@
-package com.example.validatingforminput;
+package com.example.validatingforminput.film;
 
-import jakarta.persistence.*;
+import com.example.validatingforminput.actor.Actor;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import javax.swing.*;
 import java.util.Set;
 
-@Entity
-public class Film {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
-    private Long id;
+public class FilmDTO    {
     @NotNull
     @Size(max = 20)
     private String title;
+    @NotNull
+    @Size(max = 20)
+    private String reTitle;
     @NotNull
     private String genre;
     @NotNull
     @Min(value =1900, message = "po golqmo ot 1900")
     private int year;
     @ManyToMany
-    @JoinTable (name = "film_actor",
-    joinColumns = @JoinColumn(name = "film_id"),
-    inverseJoinColumns = @JoinColumn(name = "actor_id"))
+    @JoinTable(name = "film_actor",
+            joinColumns = @JoinColumn(name = "film_id"),
+            inverseJoinColumns = @JoinColumn(name = "actor_id"))
     @NotNull
     @Size(min = 1, max = 4)
     private Set<Actor> actors;
 
-    public Long getId() {
-        return id;
+    boolean isLeapYear;
+
+    public boolean isLeapYear() {
+        return isLeapYear;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setLeapYear(boolean leapYear) {
+        isLeapYear = leapYear;
     }
 
     public String getTitle() {
@@ -68,5 +70,13 @@ public class Film {
 
     public void setActors(Set<Actor> actors) {
         this.actors = actors;
+    }
+
+    public String getReTitle() {
+        return reTitle;
+    }
+
+    public void setReTitle(String reTitle) {
+        this.reTitle = reTitle;
     }
 }

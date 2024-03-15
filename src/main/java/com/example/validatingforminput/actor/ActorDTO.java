@@ -1,15 +1,13 @@
-package com.example.validatingforminput;
+package com.example.validatingforminput.actor;
 
-import jakarta.persistence.*;
+import com.example.validatingforminput.nationality.Nationality;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-@Entity
-public class Actor {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
-    private Long id;
+public class ActorDTO {
     @NotNull
     @Size(min = 2, max = 20)
     private String firstName;
@@ -17,10 +15,13 @@ public class Actor {
     @Size(min = 2, max = 20)
     private String lastName;
     @ManyToOne(optional = true)
-    @JoinColumn (name = "Nationality_ID", nullable = true)
+    @JoinColumn(name = "Nationality_ID", nullable = true)
     Nationality nationality;
+    @Min(18)
     @NotNull
     private int age;
+    @Size(min = 2, max = 10)
+    @NotNull
     private String sex;
 
     public String getFirstName() {
@@ -61,16 +62,5 @@ public class Actor {
 
     public void setSex(String sex) {
         this.sex = sex;
-    }
-
-
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }
